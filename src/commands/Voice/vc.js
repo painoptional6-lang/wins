@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { joinVoiceChannel, getVoiceConnection } from '@discordjs/voice';
+import { joinVoiceChannel, getVoiceConnection } from '@discordjs/vc';
 import { errorEmbed, successEmbed } from '../../utils/embeds.js';
 import { InteractionHelper } from '../../utils/interactionHelper.js';
 
