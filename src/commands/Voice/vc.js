@@ -5,7 +5,7 @@ import { InteractionHelper } from '../../utils/interactionHelper.js';
 
 export default {
     data: new SlashCommandBuilder()
-        .setName('voice')
+        .setName('vc')
         .setDescription('Voice channel controls')
         .addSubcommand(sub =>
             sub.setName('join').setDescription('Bot joins your voice channel')
