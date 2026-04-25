@@ -462,6 +462,46 @@ export const botConfig = {
     fun: true,
   },
 };
+const { SlashCommandBuilder } = require('discord.js');
+const { joinVoiceChannel, getVoiceConnection } = require('@discordjs/voice');
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('join')
+        .setDescription('Bot joins your voice channel')
+        .addSubcommand(sub => 
+            sub.setName('vc').setDescription('Join your VC')
+        )
+        .addSubcommand(sub => 
+            sub.setName('leave').setDescription('Leave the VC')
+        ),
+
+    async execute(interaction) {
+        const sub = interaction.options.getSubcommand();
+
+        if (sub === 'vc') {
+            const channel = interaction.member.voice.channel;
+            if (!channel) return interaction.reply('You must be in a voice channel.');
+
+            joinVoiceChannel({
+                channelId: channel.id,
+                guildId: interaction.guild.id,
+                adapterCreator: interaction.guild.voiceAdapterCreator
+            });
+
+            return interaction.reply(`Joined **${channel.name}**`);
+        }
+
+        if (sub === 'leave') {
+            const connection = getVoiceConnection(interaction.guild.id);
+            if (!connection) return interaction.reply('I am not in a voice channel.');
+
+            connection.destroy();
+            return interaction.reply('Left the voice channel.');
+        }
+    }
+};
+
 
 
 export function validateConfig(config) {
